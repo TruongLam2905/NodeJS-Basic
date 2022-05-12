@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form id="formUp" method="POST" >
+        <input id="user" type="text" name="username" placeholder="username"> 
+        <input id="pass" type="text" name="password" placeholder="password"> 
+        <input id="display" type="text" name="displayname" placeholder="displayname"> 
+        <button type="submit">Update</button>
+    </form>
+    .
+</body>
+<script>
+    var currentLocation = window.location.href.charAt(window.location.href.length - 1);
+    console.log(currentLocation);
+    var element = document.getElementsByTagName("form");
+    console.log(element);
+    $.ajax({
+        url: 'http://localhost:3000/api/'+ currentLocation +'',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json',
+        // data: {user: this.username, pass: this.password, display: this.displayname},
+        success: function(data) {
+            
+            console.log(data)
+            // var user = $('value="'+ data[0].username +'"');
+            // var pass = $('value="'+ data[0].password +'"');
+            // var display = $('value="'+ data[0].displayname +'"');
+            $('#user').attr('value',data[0].username);
+            $('#pass').attr('value',data[0].password);
+            $('#display').attr('value',data[0].displayname);
+            $('#formUp').attr('action',`/update/${data[0].id}`);
+            // var row = $('<tr><td>' + data[i].username + '</td><td>' + data[i].password + '</td><td>' + data[i].displayname + '</td><td><a href="/detail/' + data[i].id + '">Detail</a></td><td><a href="/update/' + data[i].id + '">Update</a></td><td><a href="/delete/' + data[i].id + '">Delete</a></td></tr>');
+            // // console.log(row)
+            // $('#myTable').append(row);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('Error: ' + textStatus + ' - ' + errorThrown);
+        }
+    });
+    </script>
+</html>
+</html>

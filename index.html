@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Fetch using MySQL and Node.js</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="table-data">
+<h2>Display Data using Node.js & MySQL</h2>
+    <table border="1" id="myTable">
+        <tr>
+            <th>username</th>
+            <th>password</th>
+            <th>displayname</th>
+        </tr>
+        <tr>
+            <a href="/create">Create</a>
+        </tr>
+    </table>
+    </div>
+</body>
+<script >
+    $.ajax({
+        url: 'http://localhost:3000/api/list',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json',
+        // data: {user: this.username, pass: this.password, display: this.displayname},
+        success: function(data) {
+            
+            for (var i=0; i<data.length; i++) {
+                var row = $('<tr><td>' + data[i].username + '</td><td>' + data[i].password + '</td><td>' + data[i].displayname + '</td><td><a href="/detail/' + data[i].id + '">Detail</a></td><td><a href="/update/' + data[i].id + '">Update</a></td><td><a href="/delete/' + data[i].id + '">Delete</a></td></tr>');
+                // console.log(row)
+                $('#myTable').append(row);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('Error: ' + textStatus + ' - ' + errorThrown);
+        }
+    });
+    </script>
+</html>
